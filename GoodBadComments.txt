@@ -1,0 +1,55 @@
+#Good Comments
+function LogAuditError ([System.Data.SqlClient.SqlConnection]$Connection) {
+    Write-Host $instance
+	Write-Host $Error[0].ToString()
+	$errorMessage = $Error[0].ToString()
+	$errorMessage = $errorMessage.Replace("'","''")
+	$Command.Connection = $Connection
+    write-host "Error inserting"
+	$sql = "INSERT into [SQL_Audit].[dbo].[SQL_Instance_Audit] (SQL_Instance_ID, Audit_Error, Audit_Success_Flag, Audit_Datetime)
+		SELECT $InstanceID, '$errorMessage', 0, getdate()"
+	$Command.CommandText = $sql
+	$Connection.Open()
+	$returnValue = $Command.ExecuteNonQuery()
+        #TODO: Enhance error handling to capture additional details for analysis.
+		if ($returnValue -ne 1) {
+			Write-Error 'ERROR!'
+			Write-Warning $sql
+			$Connection.Close()
+			Exit
+		}
+    #Failure to close the connection may result in resource leaks and degraded performance
+	$Connection.Close()
+}
+
+#Bad comments
+###################################################################################################
+function fetchInfoFromVThree ([System.Data.SqlClient.SqlConnection]$Connection ,$ins, $InfoType) {    
+    # $InstanceID = $ins[0]  # commented out code
+    
+    $instance = $ins #$ins[1]  # Noise comment, doesn't provide additional meaningful information
+    
+    $vThreeAccessFlag = 0
+    
+    if ($InfoType -eq 'Disposition' -or $InfoType -eq 'All'){
+        # Script to fetch the Disposition 
+        $instanceForV3 =$instance.Split(".")  
+    
+        $URL = "https://vthree.simplot.com/api/ci/" + $instanceForV3[0]
+        $DispositionName = ''
+        try{
+            $CI = Invoke-RestMethod $URL
+            $DispositionName = $CI.CI.Disposition_Name
+            write-host $DispositionName -BackgroundColor Green
+            $vThreeAccessFlag = 1
+            if($InfoType -eq 'Disposition')
+            {
+                return $DispositionName
+            }
+        }
+        catch
+        {
+            Write-Host "ERROR Fetching Disposition for $instance!"
+        }
+    }
+}
