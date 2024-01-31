@@ -20,7 +20,7 @@ def form_number(digits):
 
 def perform_kaprekar_routine(number):
     count = 0
-    karprekar_constant=6174
+    karprekar_constant = 6174
     while number != karprekar_constant:
         digits = get_digits(number)
 
@@ -35,11 +35,14 @@ def perform_kaprekar_routine(number):
         count += 1
         print(f"Iteration {count}: {desc_number} - {asc_number} = {number}")
 
-    return f"Got the Kaprekar's number 6174 after {count} iterations"
+    return f"Got Kaprekar's number 6174 after {count} iterations"
 
-def kaprekar_routine_with_input():
-    number = int(input("Enter a four-digit number: "))
+def take_input():
+    return int(input("Enter a four-digit number: "))
+
+def kaprekar_routine():
+    number = take_input()
     result = perform_kaprekar_routine(number)
     print(result)
 
-kaprekar_routine_with_input()
+kaprekar_routine()
