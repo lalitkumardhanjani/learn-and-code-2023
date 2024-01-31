@@ -20,8 +20,8 @@ def form_number(digits):
 
 def perform_kaprekar_routine(number):
     count = 0
-
-    while number != 6174:
+    karprekar_constant=6174
+    while number != karprekar_constant:
         digits = get_digits(number)
 
         if are_all_digits_identical(digits):
