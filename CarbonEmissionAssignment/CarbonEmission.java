@@ -8,12 +8,12 @@ public class CarbonEmission {
         String emailPassword = InputReader.readPassword();
         String emailDomain = InputReader.readEmailDomain();
 
-        Properties pop3Properties = MailConfiguration.getPop3Properties(emailDomain);
-        Session mailSession = Session.getDefaultInstance(pop3Properties, new MailAuthenticator(emailUsername, emailPassword));
+        Properties mailConfigurationProperties = MailConfiguration.getPop3Properties(emailDomain);
+        Session mailSession = Session.getDefaultInstance(mailConfigurationProperties, new MailAuthenticator(emailUsername, emailPassword));
 
         try {
             Store mailStore = mailSession.getStore("pop3");
-            mailStore.connect(pop3Properties.getProperty("mail.pop3.host"), emailUsername, emailPassword);
+            mailStore.connect(mailConfigurationProperties.getProperty("mail.pop3.host"), emailUsername, emailPassword);
 
             int inboxMessageCount = MailboxOperations.getInboxMessageCount(mailStore);
 
