@@ -1,9 +1,8 @@
 package KaprekarConstantAssignment;
 
 public class DigitValidator {
-    public static boolean areAllDigitsIdentical(int[] digits) {
+    public static boolean isDigitsIdentical(int[] digits) {
         int distinctCount = DigitExtractor.countDistinctDigits(digits);
         return distinctCount == 1;
     }
-
 }

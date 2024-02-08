@@ -1,6 +1,5 @@
 package KaprekarConstantAssignment;
 
-
 import java.util.Arrays;
 
 public class ArrayManipulator {
@@ -10,7 +9,7 @@ public class ArrayManipulator {
         reverseArray(sortedDigits);
         return sortedDigits;
     }
-
+    
     public static int[] sortDigitsAscending(int[] digits) {
         int[] sortedDigits = Arrays.copyOf(digits, digits.length);
         Arrays.sort(sortedDigits);
