@@ -3,7 +3,6 @@ def get_digits(number):
     hundreds = (number % 1000) // 100
     tens = (number % 100) // 10
     ones = number % 10
-
     return [thousands, hundreds, tens, ones]
 
 def are_all_digits_identical(digits):
